@@ -1,0 +1,23 @@
+apiVersion: schedule.rs/v1
+kind: TDSet
+metadata:
+  labels:
+    app.kubernetes.io/name: tdset-sample
+    app.kubernetes.io/instance: tdset-sample
+    app.kubernetes.io/part-of: rs
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: rs
+  name: tdset-sample
+  #namespace: tdtest
+spec:
+  container:
+    image: crccheck/hello-world
+    port: 8000
+  schedulingConfig:
+    - startTime: 18
+      endTime: 19
+      replica: 5
+    - startTime: 1
+      endTime: 2
+      replica: 1
+  defaultReplica: 3

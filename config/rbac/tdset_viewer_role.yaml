@@ -1,0 +1,27 @@
+# permissions for end users to view tdsets.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: tdset-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: rs
+    app.kubernetes.io/part-of: rs
+    app.kubernetes.io/managed-by: kustomize
+  name: tdset-viewer-role
+rules:
+- apiGroups:
+  - schedule.rs
+  resources:
+  - tdsets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - schedule.rs
+  resources:
+  - tdsets/status
+  verbs:
+  - get

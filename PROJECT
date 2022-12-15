@@ -1,0 +1,19 @@
+domain: rs
+layout:
+- go.kubebuilder.io/v4-alpha
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: rs
+repo: github.com/BackAged/tdset-operator
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: rs
+  group: schedule
+  kind: TDSet
+  path: github.com/BackAged/tdset-operator/api/v1
+  version: v1
+version: "3"

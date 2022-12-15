@@ -1,0 +1,31 @@
+# permissions for end users to edit tdsets.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: tdset-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: rs
+    app.kubernetes.io/part-of: rs
+    app.kubernetes.io/managed-by: kustomize
+  name: tdset-editor-role
+rules:
+- apiGroups:
+  - schedule.rs
+  resources:
+  - tdsets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - schedule.rs
+  resources:
+  - tdsets/status
+  verbs:
+  - get
