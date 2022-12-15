@@ -4,13 +4,13 @@ A simple kubernetes operator to set replica count based on the hour of the day, 
 ## Description
 Built with https://github.com/operator-framework/operator-sdk
 
-This operator lets you dynamically scale up and down your deployment replicaset based on the hour of the day.
-Example: 
-	Everyday from 10:00 to 18:00  you want to have 5 replicas of the deployment
-	from 18:00 to 21:00 you want to have 3 replicas of the deployment
-	from 21:00 to 9 you want to have 1 replicas of the deployment.
+This operator lets you dynamically scale up and down your deployment replicaset based on the hour of the day.<b>
 
-`apiVersion: schedule.rs/v1
+Example:
+	Everyday from 10:00 to 18:00  you want to have 5 replicas of the deployment, <br>
+	from 18:00 to 21:00 you want to have 3 replicas of the deployment <br>
+```
+apiVersion: schedule.rs/v1
 kind: TDSet
 metadata:
   labels:
@@ -33,4 +33,4 @@ spec:
       endTime: 2
       replica: 1
   defaultReplica: 3
-`
+```
