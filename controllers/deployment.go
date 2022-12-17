@@ -57,7 +57,7 @@ func (r *TDSetReconciler) Deployment(
 						ImagePullPolicy: corev1.PullIfNotPresent,
 						Ports: []corev1.ContainerPort{{
 							ContainerPort: int32(tdSet.Spec.Container.Port),
-							Name:          tdSet.Name,
+							Name:          "tdset",
 						}},
 					}},
 				},
