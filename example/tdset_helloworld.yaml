@@ -1,14 +1,8 @@
 apiVersion: schedule.rs/v1
 kind: TDSet
 metadata:
-  labels:
-    app.kubernetes.io/name: tdset-sample
-    app.kubernetes.io/instance: tdset-sample
-    app.kubernetes.io/part-of: rs
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/created-by: rs
-  name: tdset-sample
-  #namespace: tdset-example
+  name: tdset-hello-world
+  namespace: temp
 spec:
   container:
     image: crccheck/hello-world

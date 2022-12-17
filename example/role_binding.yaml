@@ -1,0 +1,26 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: tdset-controller-manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tdset-controller-manager-role
+subjects:
+- kind: ServiceAccount
+  name: tdset-controller-manager-sa
+  namespace: tdset-example
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: tdset-leader-election-rolebinding
+  namespace: tdset-example
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: tdset-leader-election-role
+subjects:
+- kind: ServiceAccount
+  name: tdset-controller-manager-sa
+  namespace: tdset-example

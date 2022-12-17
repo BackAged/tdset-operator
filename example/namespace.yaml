@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tdset-example
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: td-test
+
