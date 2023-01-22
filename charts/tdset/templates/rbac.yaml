@@ -1,0 +1,111 @@
+{{- if .Values.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "tdset.controllerRoleName" . }}
+rules:
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - schedule.rs
+    resources:
+      - tdsets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - schedule.rs
+    resources:
+      - tdsets/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - schedule.rs
+    resources:
+      - tdsets/status
+    verbs:
+      - get
+      - patch
+      - update
+---
+# permissions to do leader election.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "tdset.leaderRoleName" . }}
+  namespace: {{ .Release.Namespace | quote }}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "tdset.controllerRoleName" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "tdset.controllerRoleName" . }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "tdset.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace | quote }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "tdset.leaderRoleName" . }}
+  namespace: {{ .Release.Namespace | quote }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "tdset.leaderRoleName" . }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "tdset.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace | quote }}
+{{- end }}
