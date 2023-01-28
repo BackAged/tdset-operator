@@ -1,14 +1,16 @@
 # TDSet
-A simple kubernetes operator to set replica count based on the hour of the day, built for demonstration purpose.
+A simple kubernetes operator to set replica count based on the hour of the day, built for demonstration purpose for this article -
+https://shahin-mahmud.medium.com/write-your-first-kubernetes-operator-in-go-177047337eae
 
 ## Description
 Built with https://github.com/operator-framework/operator-sdk
 
-This operator lets you dynamically scale up and down your deployment replicaset based on the hour of the day.<b>
+This operator lets you dynamically scale up and down your deployment replicaset based on the hour of the day.
 
-Example:
-	Everyday from 10:00 to 18:00  you want to have 5 replicas of the deployment, <br>
-	from 18:00 to 21:00 you want to have 3 replicas of the deployment <br>
+Example: <br>
+	Everyday from 18:00 to 19:00  you want to have 5 replicas of the deployment, <br>
+	from 19:00 to 21:00 you want to have 3 replicas of the deployment <br>
+        and rest of the time you want to have 2 replicas of the deployment.
 ```
 apiVersion: schedule.rs/v1
 kind: TDSet
@@ -29,8 +31,14 @@ spec:
     - startTime: 18
       endTime: 19
       replica: 5
-    - startTime: 1
-      endTime: 2
-      replica: 1
-  defaultReplica: 3
+    - startTime: 19
+      endTime: 21
+      replica: 3
+  defaultReplica: 2
+```
+
+## Helm installation
+```
+helm repo add tdset https://backaged.github.io/tdset-operator/
+helm install tdset tdset/tdset-controller -n tdset
 ```
